@@ -32,7 +32,8 @@ $.fn.extend
       ok: 'Confirm'
       ok_class: 'button alert'
       cancel: 'Cancel'
-      cancel_class: 'button secondary'
+      cancel_class: 'button secondary',
+      reverse_buttons: false
 
     settings = $.extend {}, defaults, options
 
@@ -91,9 +92,9 @@ $.fn.extend
         .on 'click', (e) ->
           modal.foundation('reveal', 'close')
           $el.trigger('cancel.reveal', e)
-      modal
-        .find('[data-confirm-footer]')
-        .append(confirm_button)
+      
+      button_adder = option('reverse_buttons') ? $.fn.prepend : $.fn.append
+      button_adder.apply(modal.find('[data-confirm-footer]'),confirm_button)
 
       if (password = option 'password')
         confirm_label =
